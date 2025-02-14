@@ -1,5 +1,6 @@
 import db from "@/db";
 import { sensorDataTable } from "@/db/schema";
+import { revalidatePath } from "next/cache";
 
 interface SensorData {
   sensorId: string;
@@ -34,6 +35,7 @@ export async function POST(request: Request) {
       ),
     };
     await db.insert(sensorDataTable).values(data);
+    revalidatePath("/");
 
     return new Response(
       JSON.stringify({ status: "success", message: "Data inserted" }),
