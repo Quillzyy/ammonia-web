@@ -34,6 +34,11 @@ export async function POST(request: Request) {
       ),
     };
     await db.insert(sensorDataTable).values(data);
+
+    return new Response(
+      JSON.stringify({ status: "success", message: "Data inserted" }),
+      { status: 201, headers: { "Content-Type": "application/json" } }
+    );
   } catch (error) {
     if (error instanceof Error) {
       return new Response(
